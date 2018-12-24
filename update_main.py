@@ -2,6 +2,8 @@ from utilities import *
 from websites import *
 from time import sleep
 
+__author__ = "James Wang"
+
 wks = access_gsheet().open("Free Sample").sheet1
 
 #print(wks.get_all_records())
