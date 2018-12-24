@@ -1,6 +1,8 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
+__author__ = "James Wang"
+
 def access_gsheet():
 	# Clarify APIs needed in this project
 	scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]

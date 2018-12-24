@@ -4,6 +4,8 @@ import requests
 import sys
 import re
 
+__author__ = "James Wang"
+
 class Compound(object):
 	def __init__(self):
 		self.cas_no = ''

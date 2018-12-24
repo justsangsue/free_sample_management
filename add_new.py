@@ -3,6 +3,8 @@ from websites import *
 from time import sleep
 from gspread_formatting import *
 
+__author__ = "James Wang"
+
 wks_add_new = access_gsheet().open("Free Sample").worksheet("Add New")
 wks_main_table = access_gsheet().open("Free Sample").worksheet("Free Sample")
 
