@@ -1,0 +1,4 @@
+6/11/2019
+1. Cannot skip current row if company name is empty.
+2. Dead loop on "GSK2982772"
+3. Should add a new function: change cells color after loaded into main table
