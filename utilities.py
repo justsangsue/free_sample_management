@@ -41,9 +41,11 @@ def format_date(date):
 	return month + '/' + day + '/' + year
 
 def fill_row_values(row_values, length):
-	# Fill row_values to length using ''
+	# Fill row_values to length by ''
+	need = 0
 	if len(row_values) < length:
 		need = length - len(row_values)
 	for i in range(need):
 		row_values.append('')
+
 

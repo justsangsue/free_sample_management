@@ -48,8 +48,8 @@ class ChemieTek(Compound):
 		search_result = "http://www.chemietek.com/advancedsearchresult.aspx?type=any&categoryids=168+170+171+185+193+194+195+204+205+208+217+222+223+237+240+244+253+254+257+261+31+32+33+38+39+43+46+47+50+52+53+55+56+58+59+62+63+64+74+77+78+79+80+82+85+88+92+97+98+99+100+101+102+103+104+106+113+115+120+121+154+172+173+174+175+179+181+183+189+198+201+203+207+211+214+216+219+220+226+234+235+238+245+260+61+40+41+42+84+65+93+110+112+118+163+164+167+177+178+180+182+215+218+231+236+239+255+259+51+44+45+54+60+67+68+83+196+202+230+242+262+263+264+30+35+57+69+70+72+34+109+48+49+90+96+105+155+75+187+188+233+76+116+117+81+36+37+107+186+210+213+224+225+227+86+87+91+66+71+73+114+153+190+29+191+192+197+206+209+212+221+241+94+122+184+95+111+89+108+119+152+161+159+160+162+258+166+200+229+243+247+248+249+250+251+252+&keyword="+keyword+"&price1=&price2=&contentmenuitemids=&departmentids=&manufacturerid=&searchtype=&quick=true&isnewsearch=false"
 		page = requests.get(search_result)
 		if page.status_code != 200:
-			print(keyword + ": Fail to fetch search result!")
-			return
+			print(keyword + ": Fail to fetch search result from ChemieTek!")
+			return ''
 
 		soup = BeautifulSoup(page.content, "html.parser")
 		#print("class=\"ProductLink\"" in soup.prettify())
@@ -64,9 +64,9 @@ class ChemieTek(Compound):
 		# Fill all inforamtion
 		product_link = self.get_product_link(keyword)
 		if product_link == '' or product_link == None:
-			print("Compound not found!")
+			print("Cannot find compound %s on ChemieTek!" % keyword)
 			self.name = keyword
-			return
+			return ''
 		# Get link
 		self.link = product_link
 		page = requests.get(product_link)
@@ -113,7 +113,7 @@ class SelleckChem(Compound):
 		search_result = "https://www.selleckchem.com/search.html?searchDTO.searchParam=" + keyword
 		page = requests.get(search_result)
 		if page.status_code != 200:
-			print(keyword + ": Fail to fetch search result!")
+			print(keyword + ": Fail to fetch search result from SelleckChem!")
 			return ''
 
 		soup = BeautifulSoup(page.content, "html.parser")
@@ -128,7 +128,7 @@ class SelleckChem(Compound):
 		# Fill all information
 		product_link = self.get_product_link(keyword)
 		if product_link == '' or product_link == None:
-			print("Compound not found!")
+			print("Cannot find compound %s on SelleckChem!" % keyword)
 			self.name = keyword
 			return
 		# Get link
@@ -178,7 +178,7 @@ class MCE(Compound):
 		search_result = "https://www.medchemexpress.com/search.html?q=" + keyword + "&ft=&fa=&fp="
 		page = requests.get(search_result)
 		if page.status_code != 200:
-			print(keyword + ": Fail to fetch search result!")
+			print(keyword + ": Fail to fetch search result from MCE!")
 			return
 
 		soup = BeautifulSoup(page.content, "html.parser")
@@ -193,7 +193,7 @@ class MCE(Compound):
 		# Fill all information
 		product_link = self.get_product_link(keyword)
 		if product_link == '' or product_link == None:
-			print("Compound not found!")
+			print("Cannot find compound %s on MCE!" % keyword)
 			self.name = keyword
 			return
 		# Get link
@@ -209,10 +209,10 @@ class MCE(Compound):
 		result = soup.find("h1", itemprop="name")
 		name_raw = result.get_text().strip()
 		name_cleaned = name_raw
-		syn = []
+		syn = ''
 		if '(' in name_raw and len(name_raw[name_raw.find('(') + 1 : name_raw.find(')')]) != 1:
 			name_cleaned = name_raw[:name_raw.find('(')].strip()
-			syn = name_raw[name_raw.find("(Synonyms: ") + 11:name_raw.find(')')]
+			syn = name_raw[name_raw.find("(Synonyms: ") + 11 : name_raw.find(')')]
 		self.name = name_cleaned
 
 		# Get description
